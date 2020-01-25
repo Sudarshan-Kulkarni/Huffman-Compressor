@@ -17,7 +17,7 @@ class Huffman
         class Node
         {
             char id;
-            int freq;
+            long long int freq;
             Node* leftChild;
             Node* rightChild;
             friend class Huffman;
@@ -48,7 +48,7 @@ class Huffman
         // all data structures we'll use during compression and decompression
         fstream file_in, file_out;
         string fileName, fileContents;
-        map<char,int>frequencyTable;
+        map<char, long long int>frequencyTable;
         priority_queue<Node*, vector<Node*>, compare>pq;
         Node* root=NULL;
         map<char, string> codeMap;
@@ -64,7 +64,7 @@ class Huffman
 
         // Compression helper functions
         string readFileContents(string);
-        map<char,int> constructFrequencyTable(string);
+        map<char,long long int> constructFrequencyTable(string);
         void constructPriorityQueue();
         void traverseTree(Node*, string);
         void writeToFile();
@@ -72,7 +72,7 @@ class Huffman
         void writeCompressedFileContents();
 
         // Decompression helper funtions
-        map<char, int> reconstructFrequencyTable(string);
+        map<char, long long int> reconstructFrequencyTable(string);
         string decompressUtil();
         string translateHuffman(vector<bool>);
 

@@ -50,9 +50,9 @@ string Huffman::readFileContents(string fileName)
 }
 
 // function to construct the frequency table.
-map<char, int> Huffman::constructFrequencyTable(string fileContents)
+map<char, long long int> Huffman::constructFrequencyTable(string fileContents)
 {
-    map<char, int>freqTable;
+    map<char, long long int>freqTable;
     for(char c:fileContents)
     {        
         if(freqTable.find(c)==freqTable.end())
@@ -116,7 +116,7 @@ void Huffman::traverseTree(Huffman::Node* cur, string code)
 // writes the length of the header for later use(seek) and then writes the file header
 void Huffman::writefileHeader()
 {
-    int headerSize=0;
+    long long int headerSize=0;
     vector<string>toWriteVec;
     for(auto it=frequencyTable.begin();it!=frequencyTable.end();it++)
     {
@@ -132,7 +132,7 @@ void Huffman::writefileHeader()
 
 
 
-    int tmp = to_string(headerSize).size();
+    long long int tmp = to_string(headerSize).size();
     headerSize = to_string(headerSize+tmp).size()==to_string(headerSize).size()?headerSize+tmp:headerSize+tmp+1;
 
     string str_headerSize = to_string(headerSize);
@@ -140,7 +140,7 @@ void Huffman::writefileHeader()
     file_out.write(str_headerSize.c_str(),str_headerSize.size());
     file_out.write("||",2);
     
-    for(int i=0;i<toWriteVec.size();i++)
+    for(long long int i=0;i<toWriteVec.size();i++)
     {
         file_out.write(toWriteVec[i].c_str(), toWriteVec[i].size());
         if(i==toWriteVec.size()-1)
@@ -235,18 +235,15 @@ Functions to decompress the file
 and the respective helper functions are given below
 */
 
-map<char, int> Huffman::reconstructFrequencyTable(string fileContents)
+map<char, long long int> Huffman::reconstructFrequencyTable(string fileContents)
 {
-    map<char, int>frequencyTable;
+    map<char, long long int>frequencyTable;
     int state=0;
     char key;
-    for(int i=fileContents.find("||")+2;i<fileContents.size();i++)
-    {
-        if(fileContents[i]=='|' && fileContents[i+1]=='|')
-        {
-            break;
-        }
-        
+    long long int fileHeaderBegin = fileContents.find("||")+2;
+    long long int fileHeaderEnd = fileContents.find("||", fileHeaderBegin+1);
+    for(long long int i=fileHeaderBegin;i<fileHeaderEnd;i++)
+    {   
         string strFreq;
         switch (state)
         {
@@ -258,11 +255,11 @@ map<char, int> Huffman::reconstructFrequencyTable(string fileContents)
         
         case 1:
             strFreq="";
-            while(fileContents[i]!=',')
+            while(isdigit(fileContents[i]))
             {
                 strFreq+=fileContents[i++];
             }
-            frequencyTable[key] = stoi(strFreq);
+            frequencyTable[key] = stoll(strFreq);
             state--;
             break;        
         default:
@@ -276,7 +273,7 @@ map<char, int> Huffman::reconstructFrequencyTable(string fileContents)
 string Huffman::translateHuffman(vector<bool>cc)
 {
     Node* r = root;
-    int pos = 0;
+    long long int pos = 0;
     string decompressedContents = "";
     while(pos!=cc.size())
     {
@@ -298,7 +295,7 @@ string Huffman::translateHuffman(vector<bool>cc)
 
 string Huffman::decompressUtil()
 {
-    int headerSize;
+    long long int headerSize;
     vector<bool>compressedContents;
     char byt = 0;
     string str_headerSize="";
