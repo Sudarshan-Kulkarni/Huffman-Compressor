@@ -21,3 +21,15 @@ g++ huffman.cpp main.cpp -o app
 ```
 ./app.exe -d <filepath.huf>
 ```
+
+###  Performance Visualization
+Given below are the screenshots showing the raw files and their compressed counterparts.
+
+#### Alice In Wonderland
+![Alice In Wonderland](https://github.com/Sudarshan-Kulkarni/Huffman-Compressor/blob/master/Screenshots/Alice%20In%20Wonderland.png?raw=true)
+
+#### Paradise Lost by John Milton
+![Paradise Lost by John Milton](https://github.com/Sudarshan-Kulkarni/Huffman-Compressor/blob/master/Screenshots/Paradise%20Lost%20by%20John%20Milton.png?raw=true)
+
+#### Lose Yourself Lyrics
+![Lose Yourself Lyrics](https://github.com/Sudarshan-Kulkarni/Huffman-Compressor/blob/master/Screenshots/Lose%20Yourself%20Lyrics.png?raw=true)
